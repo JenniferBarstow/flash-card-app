@@ -1,32 +1,51 @@
 $(document).ready(function() {
-  // var random_num = Math.floor(Math.random()*11),
-  //     random_num_2 = Math.floor(Math.random()*random_num),
-  //     operators = ["+", "-", "*"];
-  //
-  // var randomOperator = function () {
-  //   return operators[Math.floor(Math.random()*operators.length)];
-  // }
-
-  // var numberOne = Math.round(random_num),
-  //     numberTwo = Math.round(random_num_2),
-  //     operator = randomOperator();
-
   var questionsArray = JSON.parse($(".questions-array").attr("value"))
-  var randomQuestion = questionsArray[Math.floor(Math.random()*questionsArray.length)];
+  var questionCounter = 0
+  var activeQuestion = questionsArray[questionCounter];
+  var input = document.getElementsByClassName("results")[0];
+  var numCorrect = 0;
+  var numMissed = 0;
 
-  $(".number-one").text(randomQuestion.number_1)
-  $(".number-two").text(randomQuestion.number_2)
-  $(".property").text(randomQuestion.operator)
+  $(".number-one").text(activeQuestion.number_1)
+  $(".number-two").text(activeQuestion.number_2)
+  $(".property").text(activeQuestion.operator)
+  $(".correct").text(numCorrect);
+  $(".missed").text(numMissed);
 
   $("#form-answer").submit(function(event) {
+    // Determine if answer is correct
     var answer = $("#answer").val(),
-        correctAnswer = eval(String(randomQuestion.number_1) + String(randomQuestion.operator) + String(randomQuestion.number_2));
+        correctAnswer = eval(String(activeQuestion.number_1) + String(activeQuestion.operator) + String(activeQuestion.number_2));
 
+    // Increase the questionCounter
+    questionCounter += 1
+
+    // Conditional to show correct/incorrect view
     if (correctAnswer === parseInt(answer)) {
-      $(".container").html("<div class='answer-status bg-correct'><a href='#' onclick='location.reload();'>Correct! Next Question</a></div>")
+      numCorrect += 1;
+      $(".answer-status.bg-correct").show();
+      $(".ninja").addClass("right");
     } else {
-      $(".container").html("<div class='answer-status bg-incorrect'><a href='#' onclick='location.reload();'>Incorrect! Next Question</a></div>")
+      numMissed += 1;
+      $(".answer-status.bg-incorrect").show();
+      $(".ninja").addClass("left");
     }
+
+    // Update correct score
+    $(".correct").text(numCorrect);
+    $(".missed").text(numMissed);
+
+    $("#answer").val("");
     event.preventDefault();
   });
+
+  $(".answer-status a").on("click", function() {
+    $(".answer-status").hide();
+    $(".ninja").removeClass("right left");
+
+    activeQuestion = questionsArray[questionCounter];
+    $(".number-one").text(activeQuestion.number_1)
+    $(".number-two").text(activeQuestion.number_2)
+    $(".property").text(activeQuestion.operator)
+  })
 })

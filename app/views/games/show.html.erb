@@ -1,3 +1,12 @@
+
+
+<div class="correct-value">
+  <p>Correct: <span class="correct"></span></p>
+</div>
+<div class="incorrect-value">
+  <p>Missed: <span class="missed"></span>
+</div>
+
 <div class="questions-array" value="<%= @questions_array %>">
 <div class="container">
   <h2>Math</h2>
@@ -15,4 +24,7 @@
       <input type="submit" value="Check Answer" class="check-answer">
     </form>
   </div>
+  <div class='answer-status bg-correct' style="display: none;"><a href='#'>Correct! Next Question</a></div>
+  <div class='answer-status bg-incorrect' style="display: none;"><a href='#'>Incorrect! Next Question</a></div>
+  <%= image_tag("ninja.jpg", class: "ninja") %>
 </div>
