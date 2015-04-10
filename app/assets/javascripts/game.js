@@ -1,6 +1,6 @@
 $(document).ready(function() {
-  var questionsArray = JSON.parse($(".questions-array").attr("value"))
-  var questionCounter = 0
+  var questionsArray = JSON.parse($(".questions-array").attr("value"));
+  var questionCounter = 0;
   var activeQuestion = questionsArray[questionCounter];
   var input = document.getElementsByClassName("results")[0];
   var numCorrect = 0;
